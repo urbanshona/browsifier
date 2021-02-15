@@ -5,9 +5,8 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "webpack --mode=production",
-    "build": "npm run build:types && npm run build:js"
+    "build": "webpack --mode=production",
+    "dev": "ts-node  -r tsconfig-paths/register ./src/index.ts -s server/entities -o browser/entities"
   },
   "author": {
     "name": "Desmond Rgwaringesu",
@@ -28,5 +27,8 @@
     "webpack": "5.21.2",
     "webpack-cli": "4.5.0",
     "yargs": "^16.2.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0"
   }
 }
