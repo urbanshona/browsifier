@@ -47,6 +47,7 @@ export class AppFileDecoratorRemover
                          .match(/import\s*\{(?!\s*\n).*|export.*|\w*\s*\:\s*.+\;|(?<!.+)(\s)*\}(?=\s*\n+)/gi) // select non decorator elements
                          .join('\n')  // place each selected statement on its own line
                          .replace('export', '\nexport') // add a new line between import statements and the definition of the class
+                         .replace(/(^\w+(?!\s+|t|r|o|p|x|m)(?:.)*)/gm, ' $1'); // indent statements within the class definition
 
 
 
