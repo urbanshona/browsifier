@@ -1,4 +1,4 @@
-import {logger} from '@browsifier-shared/logger';
+//import {logger} from '@browsifier-shared/logger';
 import yargs from 'yargs';
 import {AppFileDecoratorRemover} from '@browsifier-core/file-generator/app-file-decorator-remover';
 

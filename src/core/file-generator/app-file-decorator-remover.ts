@@ -39,7 +39,7 @@ export class AppFileDecoratorRemover
 
     private static removeDecoratorsFromFile(path: string, options: IAppFileDecoratorRemoverOptions)
     {
-        // logger.log(`Browsifier removeDecoratorsFromFile --> called with path: ${path}`);
+         logger.log(`Browsifier removeDecoratorsFromFile --> called with path: ${path} options ${options}`);
 
         let rawFile: string = fs.readFileSync(path, {encoding: 'utf8'});
 
