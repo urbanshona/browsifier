@@ -1,6 +1,6 @@
 {
   "name": "@urbanshona/browsifier",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A Command Line App to remove decorators from TypeORM Entity Definitions",
   "scripts": {
     "type-check": "tsc --noEmit",
