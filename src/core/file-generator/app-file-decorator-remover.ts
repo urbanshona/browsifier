@@ -44,6 +44,8 @@ export class AppFileDecoratorRemover
         let rawFile: string = fs.readFileSync(path, {encoding: 'utf8'});
 
         rawFile = rawFile.replace(/import(.|\n)*from\s\"typeorm";/gi, '') // Remove the TypeORM import
+                         .match(/import\s*\{(?!\s*\n).*|export.*|\w*\s*\:\s*.+\;|(?<!.+)(\s)*\}(?=\s*\n+)/gi) // select non decorator elements
+
 
         logger.log(rawFile);
 
