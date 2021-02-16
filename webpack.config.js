@@ -1,6 +1,7 @@
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require ('tsconfig-paths-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: path.resolve(__dirname, 'src'),
@@ -28,5 +29,10 @@ module.exports = {
 
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "package.json", to: "package.json" },
+      ],
+    }),
   ]
 };
