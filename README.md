@@ -12,5 +12,18 @@ npm i @urbanshona/browsifier
 ## Usage
 
 ```shell
-browsifier -s [folder with TypeORM Entities] -o [Output folder] -q [Boolean : Use Single Quotes or Not in import statements]
+browsifier -s [Input] -o [Output] -q [Quotes]
+
+Options:
+ --help                 Show help
+--version              Show version number
+
+-s, --source           The Folder Containing TypeORM Entity Classes written in Typescript
+
+-o, --output           The Folder to place generated classes that have been stripped of 
+                       Typeorm Decorators/ import statments (i.e browsified)
+
+-q, --quotes           Whether to use single or double quotes for import statments 
+                       in the generated classes
+
 ```
