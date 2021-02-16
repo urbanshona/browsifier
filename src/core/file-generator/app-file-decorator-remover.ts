@@ -43,6 +43,8 @@ export class AppFileDecoratorRemover
 
         let rawFile: string = fs.readFileSync(path, {encoding: 'utf8'});
 
+        rawFile = rawFile.replace(/import(.|\n)*from\s\"typeorm";/gi, '') // Remove the TypeORM import
+
         logger.log(rawFile);
 
         return rawFile;
