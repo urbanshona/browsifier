@@ -39,21 +39,27 @@ export class AppFileDecoratorRemover
 
     private static removeDecoratorsFromFile(path: string, options: IAppFileDecoratorRemoverOptions)
     {
-         logger.log(`Browsifier removeDecoratorsFromFile --> called with path: ${path} options ${options}`);
+         // logger.log(`Browsifier removeDecoratorsFromFile --> called with path: ${path} options ${options}`);
 
         let rawFile: string = fs.readFileSync(path, {encoding: 'utf8'});
 
-        rawFile = rawFile.replace(/import(.|\n)*from\s\"typeorm";/gi, '') // Remove the TypeORM import
-                         .match(/import\s*\{(?!\s*\n).*|export.*|\w*\s*\:\s*.+\;|(?<!.+)(\s)*\}(?=\s*\n+)/gi) // select non decorator elements
+        rawFile = rawFile.replace(/import(.|\n)*from\s"typeorm";/gi, '') // Remove the TypeORM import
+                         .match(/import\s*{(?!\s*\n).*|export.*|\w*\s*:\s*.+;|(?<!.+)(\s)*}(?=\s*\n+)/gi) // select non decorator elements
                           .concat('\n')// add a new line character at the end of the selected elements array ( as class defs should end with a new line char)
                           .join('\n')  // place each selected statement on its own line
                          .replace('export', '\nexport') // add a new line between import statements and the definition of the class
                          .replace(/(^\w+(?!\s+|t|r|o|p|x|m)(?:.)*)/gm, ' $1'); // indent statements within the class definition
 
 
+        if (options.isToSingleQuoteImports)
+        {
+            rawFile = rawFile.replace(/"/g, `'`);
+        }else{
+            rawFile = rawFile.replace(/'/g, `"`);
+        }
 
 
-        logger.log(rawFile);
+        // logger.log(rawFile);
 
         return rawFile;
 // // remove typeorm import
