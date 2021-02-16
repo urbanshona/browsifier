@@ -45,6 +45,8 @@ export class AppFileDecoratorRemover
 
         rawFile = rawFile.replace(/import(.|\n)*from\s\"typeorm";/gi, '') // Remove the TypeORM import
                          .match(/import\s*\{(?!\s*\n).*|export.*|\w*\s*\:\s*.+\;|(?<!.+)(\s)*\}(?=\s*\n+)/gi) // select non decorator elements
+                         .join('\n')  // place each selected statement on its own line
+
 
 
         logger.log(rawFile);
