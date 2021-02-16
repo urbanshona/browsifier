@@ -1,5 +1,6 @@
 import {logger} from '@browsifier-shared/logger';
 import yargs from 'yargs';
+import {AppFileDecoratorRemover} from '@browsifier-core/file-generator/app-file-decorator-remover';
 
 const options = yargs.options({
     s: {
@@ -27,4 +28,21 @@ const options = yargs.options({
 }).argv;
 
 
-logger.log(JSON.stringify(options, null, 2));
+// logger.log(JSON.stringify(options, null, 2));
+
+
+const sourceDirOfEntities = `${options.source}`;
+const outPutOfEntities = `${options.output}`;
+
+
+// logger.log(`Browsifier source Dir of entities : ${sourceDirOfEntities}`);
+// logger.log(`Browsifier output Dir of entities : ${outPutOfEntities}`);
+
+// logger.log(`Browsifier called with options : ${fxnPrettyJSON(options)}`);
+
+
+const decOptions = {
+    isToSingleQuoteImports: options.quote as boolean
+};
+
+AppFileDecoratorRemover.removeDecorators(sourceDirOfEntities, outPutOfEntities, decOptions);
