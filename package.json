@@ -1,16 +1,25 @@
 {
   "name": "@urbanshona/browsifier",
   "version": "0.0.1",
-  "description": "A Command Line App to remove decorators from TypeORM Entity Definitions",
+  "author": {
+    "name": "Desmond Rgwaringesu",
+    "email": "desmondrg@gmail.com"
+  },
+  "description": "A Command Line App for generating Typescript classes without decorators from TypeORM Entity Definitions.",
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build": "webpack --mode=production",
     "dev": "ts-node  -r tsconfig-paths/register ./src/index.ts -s src/server/entities -o src/browser/entities"
   },
-  "author": {
-    "name": "Desmond Rgwaringesu",
-    "email": "desmondrg@gmail.com"
+  "keywords": [
+    "strip decorators",
+    "remove decorators",
+    "remove decorators from TypeORM Entities"
+  ],
+  "repository": "",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "main": "dist/index.js",
   "bin": {
