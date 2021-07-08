@@ -9,7 +9,7 @@
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "declaration": false,
-    "outDir": "out-tsc",
+    "outDir": "dist",
     "target": "es2015",
     "module": "commonjs",
     "strict": true,
@@ -24,13 +24,14 @@
       ]
     }
   },
-  "include": [
-    "src/**/*"
+  "files": [
+    "index.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "src/browser/**/*",
-    "src/server/**/*"
+    "src/server/**/*",
+    "prebuild.ts"
   ]
 }

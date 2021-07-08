@@ -1,6 +1,6 @@
 {
   "name": "@urbanshona/browsifier",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Desmond Rgwaringesu",
     "email": "desmondrg@gmail.com"
@@ -9,15 +9,20 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "webpack --mode=production",
-    "dev": "ts-node  -r tsconfig-paths/register ./src/index.ts -s src/server/entities -o src/browser/entities"
+    "dev": "ts-node  -r tsconfig-paths/register ./src/index.ts -s src/server/entities -o src/browser/entities",
+    "build": "ts-node prebuild.ts && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
+    "publish:local": "cd ./dist && npm link --force",
+    "publish:global": "cd ./dist && yarn run publish:local && npm publish",
+    "build-n-publish:local": "yarn run build && yarn run publish:local",
+    "build-n-publish:local-n-test": "yarn run build-n-publish:local && yarn run test",
+    "test": "browsifier"
   },
   "keywords": [
     "strip decorators",
     "remove decorators",
     "remove decorators from TypeORM Entities"
   ],
-  "repository": "",
+  "repository": "https://github.com/urbanshona/browsifier.git",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
@@ -26,27 +31,23 @@
     "browsifier": "./index.js"
   },
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "~7.12.16",
-    "@babel/plugin-proposal-class-properties": "~7.12.13",
-    "@babel/plugin-proposal-decorators": "~7.12.13",
-    "@babel/plugin-proposal-object-rest-spread": "~7.12.13",
-    "@babel/preset-env": "~7.12.16",
-    "@babel/preset-typescript": "~7.12.16",
-    "@types/yargs": "^16.0.0",
-    "babel-loader": "~8.2.2",
-    "babel-plugin-module-resolver": "~4.1.0",
-    "copy-webpack-plugin": "^7.0.0",
-    "fork-ts-checker-webpack-plugin": "~6.1.0",
-    "ts-node": "^9.1.1",
-    "tsconfig-paths": "^3.9.0",
-    "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "typescript": "~4.1.5",
-    "webpack": "~5.22.0",
-    "webpack-cli": "~4.5.0",
-    "yargs": "~16.2.0"
-  },
   "dependencies": {
-    "chalk": "*"
+    "chalk": "^4.1.1",
+    "lodash": "^4.17.21",
+    "rimraf": "^3.0.2",
+    "ts-morph": "^11.0.0",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "^3.9.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^16.0.0",
+    "@types/rimraf": "^3.0.1",
+    "@types/yargs": "^17.0.2",
+    "nodemon": "^2.0.9",
+    "tscpaths": "^0.0.9"
   }
 }
