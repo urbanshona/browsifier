@@ -1,6 +1,6 @@
 {
   "name": "@urbanshona/browsifier",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "Desmond Rgwaringesu",
     "email": "desmondrg@gmail.com"
@@ -12,9 +12,10 @@
     "dev": "ts-node  -r tsconfig-paths/register index.ts -s src/server/entities -o src/browser/entities",
     "build": "ts-node prebuild.ts && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
     "publish:local": "cd ./dist && npm link --force",
-    "publish:global": "yarn run publish:local && cd ./dist && npm publish",
-    "build-n-publish:local": "yarn run build && yarn run publish:local",
-    "build-n-publish:local-n-test": "yarn run build-n-publish:local && yarn run test",
+    "publish:global": "npm run publish:local && cd ./dist && npm publish --access public",
+    "build-n-publish:local": "npm run build && npm run publish:local",
+    "build-n-publish:global": "npm run build && npm run publish:global",
+    "build-n-publish:local-n-test": "npm run build-n-publish:local && npm run test",
     "test": "browsifier"
   },
   "keywords": [
