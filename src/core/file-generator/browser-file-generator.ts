@@ -1,18 +1,22 @@
-import {FileGenerator} from '@browsifier-core/file-generator/file-generator';
-import {FileNameType} from '@browsifier-core/core-gen';
 import {ClassDeclaration, SourceFile} from 'ts-morph';
 import {logger} from '@browsifier-shared/logger';
+import {FileGenerator, IFileGeneratorOptions} from '@urbanshona/common-cli';
+
 logger.context = 'Browsifier';
 
-export class BrowserFileGenerator extends FileGenerator {
+
+export class BrowserFileGenerator extends FileGenerator
+{
     constructor(sourceFilePathGlob: string,
                 public rootOutputDir: string,
-                fileNameType: FileNameType) {
-        super(sourceFilePathGlob, fileNameType);
+                public options: IFileGeneratorOptions)
+    {
+        super(sourceFilePathGlob, options);
+
     }
 
     generateBrowserClass(sourceFile: SourceFile, sourceClass: ClassDeclaration) {
-        const pathOfFile = `${this.rootOutputDir}/${this.standardFileNamePrefix(sourceClass.getName())}.ts`;
+        const pathOfFile = `${this.rootOutputDir}/${this.toStandardFileNamePrefix(sourceClass.getName())}.ts`;
 
         //create the browser file without decorators
         const outputFile = this.project.createSourceFile(pathOfFile, {}, {overwrite: true});
@@ -26,7 +30,8 @@ export class BrowserFileGenerator extends FileGenerator {
         //give the properities to the output file
         outputFile.addClass({
             name: sourceClass.getName(),
-            properties: sourceClass.getProperties().map(x => x.getStructure())
+            properties: sourceClass.getProperties().map(x => x.getStructure()),
+            isExported: sourceClass.isExported()
         });
 
         // remove typeorm imports
@@ -38,7 +43,9 @@ export class BrowserFileGenerator extends FileGenerator {
             //standardize the imported file  to match the generated file name of the entity
             const moduleSpecifier = x.getModuleSpecifierValue();
 
-            x.setModuleSpecifier(`./${this.standardFileNamePrefix(moduleSpecifier)}`);
+            // single vs double quote imports
+
+            x.setModuleSpecifier(`./${this.toStandardFileNamePrefix(moduleSpecifier)}`);
 
             outputFile.addImportDeclaration(x.getStructure());
         });

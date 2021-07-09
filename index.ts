@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 import {logger} from '@browsifier-shared/logger';
-import {FileNameType} from '@browsifier-core/core-gen';
-import {FileGenerator} from '@browsifier-core/file-generator/file-generator';
+import {FileGenerator, IFileGeneratorOptions} from '@urbanshona/common-cli';
 import {BrowserFileGenerator} from '@browsifier-core/file-generator/browser-file-generator';
 logger.context = 'Browsifier';
 
@@ -25,8 +24,43 @@ const options: any = yargs.options({
         alias: 'name',
         demandOption: true,
         default: `p`,
-        describe: 'The Naming Style for the Output file',
+        describe: 'The Naming Style for the Output file p = pascal | c = camelCase | k = kebab | s = snakeCase',
         type: 'string'
+    },
+    q: {
+        alias: 'quote',
+        demandOption: true,
+        default: true,
+        describe: 'Whether to quote imports using single quotes or double quotes. Where true -> use single quotes',
+        type: 'boolean'
+    },
+    i: {
+        alias: 'indent',
+        demandOption: true,
+        default: 'four',
+        describe: 'The Number of spaces to indent text by : two|four|eight|tab',
+        type: 'boolean'
+    },
+    f: {
+        alias: 'feed',
+        demandOption: true,
+        default: 'n',
+        describe: 'Whether to use the new line character or the carriage return for the line feed : n|c',
+        type: 'string'
+    },
+    c: {
+        alias: 'comma',
+        demandOption: false,
+        default: 'n',
+        describe: 'Whether to use trailing commas or not',
+        type: 'string'
+    },
+    p: {
+        alias: 'prefix',
+        demandOption: false,
+        default: false,
+        describe: 'Whether to use prefix and suffix text for rename',
+        type: 'boolean'
     },
 
 }).argv;
@@ -36,12 +70,20 @@ const options: any = yargs.options({
 
 const sourceDirOfEntities = `${options.source}`;
 const outPutOfEntities = `${options.output}`;
-const outPutFileNameType = `${options.name}`;
+
+const decOptions: IFileGeneratorOptions = {
+    isToSingleQuotes: options.quote as boolean,
+    fileNameType: options.name,
+    indentationText: options.indent,
+    lineFeedKind: options.feed,
+    isToUseTrailingCommas: options.comma,
+    isToUsePrefixAndSuffixTextForRename: options.prefix
+};
 
 
-const rootGenerator = new FileGenerator(`${sourceDirOfEntities}/*.ts`, outPutFileNameType as FileNameType);
+const rootGenerator = new FileGenerator(`${sourceDirOfEntities}/*.ts`, decOptions);
 
-const browserFileGenerator = new BrowserFileGenerator(`${sourceDirOfEntities}/*.ts`, outPutOfEntities, outPutFileNameType as FileNameType);
+const browserFileGenerator = new BrowserFileGenerator(`${sourceDirOfEntities}/*.ts`, outPutOfEntities, decOptions);
 
 
 rootGenerator.project.getSourceFiles().forEach((singSourceFile) => {
