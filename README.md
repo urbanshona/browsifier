@@ -42,7 +42,7 @@ Options:
                       default: true
 
 -i, --indent          The Number of spaces to indent text by : two|four|eight|tab         [string]
-                      default : four spaces         
+                      default : four         
                        
 -f, --feed            Whether to use the new line character or the carriage return        [string]
                       for the line feed : n|c
