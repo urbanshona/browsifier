@@ -51,9 +51,9 @@ const options: any = yargs.options({
     c: {
         alias: 'comma',
         demandOption: false,
-        default: 'n',
+        default: false,
         describe: 'Whether to use trailing commas or not',
-        type: 'string'
+        type: 'boolean'
     },
     p: {
         alias: 'prefix',
